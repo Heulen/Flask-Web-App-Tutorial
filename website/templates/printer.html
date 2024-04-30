@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}
+<form method="POST">
+  <h3 align="center">Add Printer</h3>
+  <div class="form-group">
+    <label for="Hostname">Hostname</label>
+    <input
+      type="text"
+      class="form-control"
+      id="Hostname"
+      name="Hostname"
+      placeholder="Enter hostname"
+    />
+  </div>
+  <div class="form-group">
+    <label for="AccesCode">Access Code</label>
+    <input
+      type="password"
+      class="form-control"
+      id="AccessCode"
+      name="AccessCode"
+      placeholder="Enter access code"
+    />
+  </div>
+  <div class="form-group">
+    <label for="Serial">Serial</label>
+    <input
+      type="text"
+      class="form-control"
+      id="Serial"
+      name="Serial"
+      placeholder="Enter serial"
+    />
+  </div>
+
+  <br />
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endblock %}

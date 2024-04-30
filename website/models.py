@@ -16,3 +16,34 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     notes = db.relationship('Note')
+
+class Printer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    hostname = db.Column(db.String(120), nullable=False)
+    access_code = db.Column(db.String(120), nullable=False)
+    serial = db.Column(db.String(120), nullable=False)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    files = db.relationship('File', backref='printer', lazy=True)
+
+class File(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(120), nullable=False)
+    printer_id = db.Column(db.Integer, db.ForeignKey('printer.id'), nullable=False)
+
+    sequence_entries = db.relationship('SequenceEntry', back_populates='file', lazy=True)
+
+class SequenceEntry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False)
+    pause = db.Column(db.Boolean, nullable=False)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    file_id = db.Column(db.Integer, db.ForeignKey('file.id'), nullable=False)
+    
+    file = db.relationship('File', back_populates='sequence_entries', lazy=True)
+
+    @property
+    def filename(self):
+        return self.file.filename
+
