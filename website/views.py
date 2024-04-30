@@ -4,7 +4,7 @@ import time
 from bambu_connect import BambuClient, PrinterStatus
 import pprint
 from dataclasses import asdict
-from .models import Note
+from .models import Note, Printer
 from . import db
 import os
 import json
@@ -41,16 +41,21 @@ def home():
 @login_required
 def printer():
     if request.method == 'POST': 
-        printer = request.form.get('printer')#Gets the printer from the HTML 
+        name = request.form.get('Name')                 #Gets the info from the HTML
+        hostname = request.form.get('Hostname')
+        access_code = request.form.get('AccessCode')
+        serial = request.form.get('Serial')
 
 
-        if len(note) < 1:
-            flash('Note is too short!', category='error') 
+        if len(name) < 1 or len(hostname) < 1 or len(access_code) < 1 or len(serial) < 1:
+            flash('One or more fields are too short!', category='error')
+
         else:
-            new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-            db.session.add(new_note) #adding the note to the database 
+            new_printer = Printer(name=name, hostname=hostname, access_code=access_code, serial=serial, user_id=current_user.id)
+            db.session.add(new_printer)
             db.session.commit()
-            flash('Note added!', category='success')
+            flash('Printer added!', category='success')
+
     
     printer_files = bambu_client.get_files()
     for file in printer_files:
