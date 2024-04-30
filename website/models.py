@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
 
 class Printer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
     hostname = db.Column(db.String(120), nullable=False)
     access_code = db.Column(db.String(120), nullable=False)
     serial = db.Column(db.String(120), nullable=False)

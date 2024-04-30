@@ -41,6 +41,8 @@ def home():
 @login_required
 def printer():
     if request.method == 'POST': 
+        printer = request.form.get('printer')#Gets the printer from the HTML 
+
 
         if len(note) < 1:
             flash('Note is too short!', category='error') 
