@@ -65,6 +65,8 @@ content %}
       <td>{{ printer.hostname }}</td>
       <td>{{ printer.serial }}</td>
       <td>
+        <button type="button" class="btn btn-sm btn-primary fetch-data-btn" data-id="{{ printer.id }}">Fetch Files</button>
+
         <button type="button" class="btn btn-sm btn-danger" onClick="deletePrinter({{ printer.id }})">
           Delete
         </button>
